@@ -10,7 +10,7 @@ const FirstStep = (props) => {
   setStep(1);
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const onClick=()=>{
-    if (email.search(emailPattern) === -1 && email==="") {
+    if (email.search(emailPattern) === -1 && email.length==0 ){
         setError((prev) => ({ ...prev, email: "Invalid email. Use a format like example@gmail.com " }));
     }
     else{

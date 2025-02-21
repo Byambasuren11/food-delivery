@@ -3,6 +3,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
+import { Checkbox } from "./ui/checkbox";
 
 const SecondStep = (props) => {
   const [password, setPassword] = useState();
@@ -61,6 +62,10 @@ const SecondStep = (props) => {
                   <div className="text-red-500">{error.confirmPassword}</div>
                 ) : (
                     <></>)}
+      </div>
+      <div className="flex gap-2">
+      <Checkbox/>
+     <p>Show password</p>
       </div>
       <Button className="bg-gray-400" onClick={onClick}>
         Let's go
