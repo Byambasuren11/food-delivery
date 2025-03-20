@@ -1,15 +1,17 @@
 "use client";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
+import { useRouter } from "next/router";
 
 const SecondStep = (props) => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [error,setError]=useState({});
-  const passwordPattern=/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+  const [error, setError] = useState({});
+  const passwordPattern =
+    /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const { setStep } = props;
   const passwordChanged = (e) => {
     setPassword(e.target.value);
@@ -18,25 +20,30 @@ const SecondStep = (props) => {
     setConfirmPassword(e.target.value);
   };
 
-  const previousPage=()=>{
-    setStep(1)
-  }
+  const previousPage = () => {
+    setStep(1);
+  };
 
   const onClick = () => {
-    if(password.search(passwordPattern)==-1){
-        setError((prev) => ({ ...prev, password: "Weak password. Use numbers and symbols" }));
+    const router = useRouter();
+    if (password.search(passwordPattern) == -1) {
+      setError((prev) => ({
+        ...prev,
+        password: "Weak password. Use numbers and symbols",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, password: "" }));
     }
-    else{
-        setError((prev) => ({ ...prev, password: "" }));
+    if (password !== confirmPassword) {
+      setError((prev) => ({
+        ...prev,
+        confirmPassword: "Those password didn't match, Try again",
+      }));
+    } else {
+      setError((prev) => ({ ...prev, confirmPassword: "" }));
     }
-    if(password!==confirmPassword){
-        setError((prev) => ({ ...prev, confirmPassword: "Those password didn't match, Try again" }));
-    }
-    else{
-        setError((prev) => ({ ...prev, confirmPassword: "" }));
-    }
-    if(error.password=="" && error.confirmPassword==""){
-        setStep(3)
+    if (error.password == "" && error.confirmPassword == "") {
+      router.push("/Login");
     }
   };
 
@@ -51,27 +58,29 @@ const SecondStep = (props) => {
       </div>
       <div>
         <Input placeholder="Password" onChange={passwordChanged} />
-        {error.password? (
-                  <div className="text-red-500">{error.password}</div>
-                ) : (
-                    <></>)}
+        {error.password ? (
+          <div className="text-red-500">{error.password}</div>
+        ) : (
+          <></>
+        )}
       </div>
       <div>
         <Input placeholder="Confirm" onChange={confirmPasswordChanged} />
-        {error.confirmPassword? (
-                  <div className="text-red-500">{error.confirmPassword}</div>
-                ) : (
-                    <></>)}
+        {error.confirmPassword ? (
+          <div className="text-red-500">{error.confirmPassword}</div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="flex gap-2">
-      <Checkbox/>
-     <p>Show password</p>
+        <Checkbox />
+        <p>Show password</p>
       </div>
       <Button className="bg-gray-400" onClick={onClick}>
         Let's go
       </Button>
       <p className="text-center mt-2">
-        Already have an account? <a href="#">Log in</a>
+        Already have an account? <a href="Login">Log in</a>
       </p>
     </div>
   );
