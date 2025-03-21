@@ -5,20 +5,26 @@ import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
-    .required("requuired"),
+    .required("required"),
 });
 
 const ThirdStep = () => {
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
+  const router = useRouter();
 
-  const onClick = () => {};
+  const getLogin = async (values: { email: string; password: string }) => {
+    const response = await axios.post("http://localhost:4007/user", values);
+    console.log("response", response);
+    localStorage.setItem("token", response.data.token);
+    router.push("/home");
+  };
 
   return (
     <div className="flex w-full justify-between h-screen">
@@ -31,6 +37,7 @@ const ThirdStep = () => {
           validationSchema={LoginSchema}
           onSubmit={(values) => {
             console.log(values);
+            getLogin(values);
           }}
         >
           {({ errors }) => (

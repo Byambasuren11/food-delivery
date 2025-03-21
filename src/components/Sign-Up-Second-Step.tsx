@@ -1,88 +1,77 @@
 "use client";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useReducer, useState } from "react";
+import { Dispatch, SetStateAction, useReducer, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 
-const SecondStep = (props) => {
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [error, setError] = useState({});
-  const passwordPattern =
-    /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const PasswordSchema = Yup.object().shape({
+  password: Yup.string().required("Password is required"),
+  passwordConfirm: Yup.string().oneOf(
+    [Yup.ref("password")],
+    "Passwords must match"
+  ),
+});
+
+const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
   const { setStep } = props;
-  const passwordChanged = (e) => {
-    setPassword(e.target.value);
-  };
-  const confirmPasswordChanged = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
+  const router = useRouter();
   const previousPage = () => {
     setStep(1);
   };
-
-  const onClick = () => {
-    const router = useRouter();
-    if (password.search(passwordPattern) == -1) {
-      setError((prev) => ({
-        ...prev,
-        password: "Weak password. Use numbers and symbols",
-      }));
-    } else {
-      setError((prev) => ({ ...prev, password: "" }));
-    }
-    if (password !== confirmPassword) {
-      setError((prev) => ({
-        ...prev,
-        confirmPassword: "Those password didn't match, Try again",
-      }));
-    } else {
-      setError((prev) => ({ ...prev, confirmPassword: "" }));
-    }
-    if (error.password == "" && error.confirmPassword == "") {
-      router.push("/Login");
-    }
-  };
-
   return (
-    <div className="w-2/5 h-1/3 flex flex-col gap-6">
-      <div className="border w-fit rounded-8" onClick={previousPage}>
-        <ChevronLeft />
-      </div>
-      <div>
-        <h3 className="text-black text-lg">Create a strong password</h3>
-        <p>Create a strong password with letters, numbers</p>
-      </div>
-      <div>
-        <Input placeholder="Password" onChange={passwordChanged} />
-        {error.password ? (
-          <div className="text-red-500">{error.password}</div>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div>
-        <Input placeholder="Confirm" onChange={confirmPasswordChanged} />
-        {error.confirmPassword ? (
-          <div className="text-red-500">{error.confirmPassword}</div>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className="flex gap-2">
-        <Checkbox />
-        <p>Show password</p>
-      </div>
-      <Button className="bg-gray-400" onClick={onClick}>
-        Let's go
-      </Button>
-      <p className="text-center mt-2">
-        Already have an account? <a href="Login">Log in</a>
-      </p>
-    </div>
+    <Formik
+      initialValues={{
+        password: "",
+        confirmPassword: "",
+      }}
+      validationSchema={PasswordSchema}
+      onSubmit={(values) => {
+        console.log(values);
+        router.push("/Login");
+      }}
+    >
+      {({ errors, touched }) => (
+        <Form className="w-2/5 h-1/3 flex flex-col gap-6">
+          <div className="border w-fit rounded-8" onClick={previousPage}>
+            <ChevronLeft />
+          </div>
+          <div>
+            <h3 className="text-black text-lg">Create a strong password</h3>
+            <p>Create a strong password with letters, numbers</p>
+          </div>
+          <div>
+            <Field placeholder="Password" name="password" className="border rounded-xl p-2 w-full"/>
+            {errors.password ? (
+              <div className="text-red-500">{errors.password}</div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div>
+            <Field placeholder="Confirm" name="confirmPassword" className="border rounded-xl p-2 w-full"/>
+            {errors.confirmPassword ? (
+              <div className="text-red-500">{errors.confirmPassword}</div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Checkbox />
+            <p>Show password</p>
+          </div>
+          <Button className="bg-gray-400" type="submit">
+            Let's go
+          </Button>
+          <p className="text-center mt-2">
+            Already have an account? <a href="Login">Log in</a>
+          </p>
+        </Form>
+      )}
+    </Formik>
   );
 };
 export default SecondStep;
