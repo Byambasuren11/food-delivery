@@ -10,7 +10,7 @@ const Home = () => {
       <div className="w-full">
         <img className="object-cover w-full" src="./bgMain.png" />
       </div>
-      <div className="bg-gray-700 w-full h-64 flex flex-col items-center">
+      <div className="bg-gray-700 w-full h-fit flex flex-col items-center">
         <FoodCategories />
       </div>
     </div>
