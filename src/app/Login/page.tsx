@@ -1,7 +1,5 @@
 "use client";
-import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -18,11 +16,11 @@ const LoginSchema = Yup.object().shape({
 
 const ThirdStep = () => {
   const router = useRouter();
-
   const getLogin = async (values: { email: string; password: string }) => {
     const response = await axios.post("http://localhost:4007/user", values);
-    console.log("response", response);
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("address", response.data.data);
+    localStorage.setItem("_id", response.data._id);
     router.push("/home");
   };
 

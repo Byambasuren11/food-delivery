@@ -1,4 +1,4 @@
-import { Header } from "@/app/home/_components/Header";
+import { Header } from "@/app/home/_features/Header";
 import { FoodCategories } from "./_features/Food-Categories";
 
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
       <div className="w-full">
         <img className="object-cover w-full" src="./bgMain.png" />
       </div>
-      <div className="bg-gray-700 w-full h-fit flex flex-col items-center">
+      <div className="bg-[#404040] w-full h-fit flex flex-col items-center">
         <FoodCategories />
       </div>
     </div>

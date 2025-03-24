@@ -13,7 +13,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!token || isExpired) {
       router.push("/Login"); // Redirect to login page if no token or token is expired
     }
-    console.log(token);
   }, [token, isExpired]);
 
   // if (isExpired) {

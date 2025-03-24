@@ -44,11 +44,13 @@ export const Foods = (props: FoodsProps) => {
                             <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col overflow-hidden object-cover">
                               <img src={el.image} />
                             </div>
-                            <div className="flex justify-between text-sm">
+                            <div className="flex justify-between text-sm text-black">
                               <p className="text-red-600"> {el.foodName}</p>
                               <p>{el.price}$</p>
                             </div>
-                            <div className="text-xs">{el.ingredients}</div>
+                            <div className="text-xs text-black">
+                              {el.ingredients}
+                            </div>
                           </div>
                         );
                       }
