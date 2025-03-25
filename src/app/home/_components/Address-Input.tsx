@@ -8,25 +8,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronRight } from "lucide-react";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-type Location={
-address:string;
-_id:string;
-}
+type Location = {
+  address: string;
+  _id: string;
+};
 type AdderssProps = {
   setLocation: Dispatch<SetStateAction<Location>>;
   address1: string;
   onClick: () => void;
+  location: string;
 };
 export const AddressInput = (props: AdderssProps) => {
-  const { address1, setLocation, onClick } = props;
+  const { address1, setLocation, onClick, location } = props;
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setLocation({...address,address:event.target.value });
+    setLocation({ ...location, address: event.target.value });
   };
   return (
     <Dialog>

@@ -1,10 +1,11 @@
 "use client";
 import Logo from "../_components/Logo";
 import { Button } from "../../../components/ui/button";
-import { MapPin, ShoppingCart, User } from "lucide-react";
+import { MapPin, User } from "lucide-react";
 import { AddressInput } from "../_components/Address-Input";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ShoppingCart, ShoppingCarts } from "../_components/Shopping-Cart";
 
 export const Header = () => {
   const address1 = localStorage.getItem("address");
@@ -30,16 +31,14 @@ export const Header = () => {
               address1={address1}
               setLocation={setLoction}
               onClick={onClick}
+              location={location}
             />
           </div>
           <MapPin className="absolute top-1 left-1 text-red-500" />
         </div>
-        <Button className="bg-white rounded-full flex justify-center items-center">
-          <ShoppingCart className=" text-red-500" />
-        </Button>
-        <Button className="bg-white rounded-full flex justify-center items-center">
-          <User className=" text-red-500" />
-        </Button>
+        <ShoppingCarts />
+
+        <User className="p-3 bg-white rounded-full text-red-500 w-9 h-9" />
       </div>
     </div>
   );

@@ -1,11 +1,19 @@
 "use client";
 import axios from "axios";
-import { FoodModel } from "../_components/Food-Model";
 import { useEffect, useState } from "react";
+import { FoodPlus } from "../_components/Food-Plus";
 
 type Category = {
   categoryName: string;
   _id: string;
+  foodCount: number;
+};
+type Food = {
+  category: string;
+  image: string;
+  foodName: string;
+  price: number;
+  ingredients: string;
 };
 
 type FoodsProps = {
@@ -14,7 +22,7 @@ type FoodsProps = {
 
 export const Foods = (props: FoodsProps) => {
   const { categories } = props;
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState<Food>();
   const getFoods = async () => {
     const response = await axios.get("http://localhost:4007/food");
     setFoods(response.data.data);
@@ -41,8 +49,9 @@ export const Foods = (props: FoodsProps) => {
                             key={index}
                             className="border bg-white border w-[250px] h-[200px] rounded-xl flex flex-col p-3 mt-[24px] gap-3"
                           >
-                            <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col overflow-hidden object-cover">
+                            <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col overflow-hidden object-cover relative">
                               <img src={el.image} />
+                              <FoodPlus />
                             </div>
                             <div className="flex justify-between text-sm text-black">
                               <p className="text-red-600"> {el.foodName}</p>
