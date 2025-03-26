@@ -9,6 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MyCart } from "../_components/My-Cart";
 
 export const ShoppingCarts = () => {
   return (
@@ -23,7 +24,7 @@ export const ShoppingCarts = () => {
             <div className="text-white">Order detail</div>
           </SheetTitle>
         </SheetHeader>
-        <Tabs defaultValue="account" className="w-[400px]">
+        <Tabs defaultValue="cart" className="w-[400px]">
           <TabsList className="w-full">
             <TabsTrigger value="cart" className="w-1/2">
               Cart
@@ -32,17 +33,16 @@ export const ShoppingCarts = () => {
               Order
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="cart" className="bg-white h-[670px]">
-            {/* <div className="bg-white h-[670px]">cart</div> */}
+          <TabsContent value="cart" className=" flex flex-col gap-5 ">
+            <div className="bg-white h-[680px] rounded-2xl p-5">
+              <MyCart />
+            </div>
+            <div className="bg-white h-[300px] rounded-2xl"></div>
           </TabsContent>
-          <TabsContent value="order" className="bg-white h-[670px]">
-            {" "}
-            {/* <div className="bg-white h-[670px]">order</div> */}
+          <TabsContent value="order" className="flex flex-col gap-5">
+            <div className="bg-white h-[980px] rounded-2xl"></div>
           </TabsContent>
         </Tabs>
-
-        {/* <SheetDescription className="bg-white h-[670px]"></SheetDescription> */}
-        {/* <SheetDescription className="bg-white h-64"></SheetDescription> */}
       </SheetContent>
     </Sheet>
   );

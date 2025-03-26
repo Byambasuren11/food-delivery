@@ -1,7 +1,8 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FoodPlus } from "../_components/Food-Plus";
+import { PlusIcon } from "lucide-react";
+import { log } from "console";
 
 type Category = {
   categoryName: string;
@@ -23,15 +24,22 @@ type FoodsProps = {
 export const Foods = (props: FoodsProps) => {
   const { categories } = props;
   const [foods, setFoods] = useState<Food>();
+  const orderFoods = [];
   const getFoods = async () => {
     const response = await axios.get("http://localhost:4007/food");
     setFoods(response.data.data);
   };
-  console.log("foods", foods);
   useEffect(() => {
     getFoods();
   }, []);
-  console.log("g", categories);
+  const onClick = (id) => {
+    const Id = foods?.map((element, index) => {
+      if (element._id === id) {
+        orderFoods.push(element);
+        localStorage.setItem("OrderFood", JSON.stringify(orderFoods));
+      }
+    });
+  };
   return (
     <>
       <div className="flex flex-col gap-6">
@@ -51,7 +59,10 @@ export const Foods = (props: FoodsProps) => {
                           >
                             <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col overflow-hidden object-cover relative">
                               <img src={el.image} />
-                              <FoodPlus />
+                              <PlusIcon
+                                className="absolute bottom-2 right-2 p-1 bg-white text-red-500 rounded-full"
+                                onClick={() => onClick(el._id)}
+                              />
                             </div>
                             <div className="flex justify-between text-sm text-black">
                               <p className="text-red-600"> {el.foodName}</p>

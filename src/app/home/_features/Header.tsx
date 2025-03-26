@@ -5,7 +5,7 @@ import { MapPin, User } from "lucide-react";
 import { AddressInput } from "../_components/Address-Input";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ShoppingCart, ShoppingCarts } from "../_components/Shopping-Cart";
+import { ShoppingCarts } from "./Shopping-Cart";
 
 export const Header = () => {
   const address1 = localStorage.getItem("address");
