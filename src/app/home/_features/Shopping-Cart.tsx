@@ -10,14 +10,15 @@ import {
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MyCart } from "../_components/My-Cart";
+import { PaymentInfo } from "../_components/Payment-Info";
 
 export const ShoppingCarts = () => {
   return (
     <Sheet>
-      <SheetTrigger className="flex items-start justify-start">
+      <SheetTrigger className="flex items-start justify-start ">
         <ShoppingCart className="p-3 bg-white rounded-full text-red-500 w-9 h-9 " />
       </SheetTrigger>
-      <SheetContent className="bg-[#404040] flex flex-col gap-5">
+      <SheetContent className="bg-[#404040] flex flex-col gap-5 min-w-[450px] ">
         <SheetHeader bg-black>
           <SheetTitle className="flex gap-2">
             <ShoppingCart />
@@ -34,13 +35,21 @@ export const ShoppingCarts = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="cart" className=" flex flex-col gap-5 ">
-            <div className="bg-white h-[680px] rounded-2xl p-5">
+            <div className="bg-white h-[680px] rounded-2xl p-5 overflow-scroll">
               <MyCart />
+              <Button className="text-red-500 bg-white border border-red-500 w-full mt-3 rounded-2xl">
+                Add Food
+              </Button>
             </div>
-            <div className="bg-white h-[300px] rounded-2xl"></div>
+            <div className="bg-white h-[220px] rounded-2xl p-3">
+              <PaymentInfo />
+              <Button className="text-white bg-red-500 w-full mt-3 rounded-2xl">
+                Checkout
+              </Button>
+            </div>
           </TabsContent>
           <TabsContent value="order" className="flex flex-col gap-5">
-            <div className="bg-white h-[980px] rounded-2xl"></div>
+            <div className="bg-white h-[910px] rounded-2xl"></div>
           </TabsContent>
         </Tabs>
       </SheetContent>

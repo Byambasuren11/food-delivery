@@ -1,21 +1,29 @@
 "use client";
 import Logo from "../_components/Logo";
-import { Button } from "../../../components/ui/button";
 import { MapPin, User } from "lucide-react";
 import { AddressInput } from "../_components/Address-Input";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ShoppingCarts } from "./Shopping-Cart";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
+type Location = {
+  address: string;
+  _id: string;
+};
 export const Header = () => {
   const address1 = localStorage.getItem("address");
   const [location, setLoction] = useState({});
-  console.log("loc", location);
 
   const updateAddress = async () => {
     setLoction({ ...location, _id: localStorage.getItem("_id") });
     const response = await axios.put("http://localhost:4007/user", location);
-    console.log(response);
+    console.log(response.data);
+    localStorage.setItem("address", response.data.updatedUser.address);
   };
   const onClick = () => {
     updateAddress();
@@ -37,8 +45,12 @@ export const Header = () => {
           <MapPin className="absolute top-1 left-1 text-red-500" />
         </div>
         <ShoppingCarts />
-
-        <User className="p-3 bg-white rounded-full text-red-500 w-9 h-9" />
+        <Popover>
+          <PopoverTrigger>
+            <User className="p-3 bg-white rounded-full text-red-500 w-9 h-9" />
+          </PopoverTrigger>
+          <PopoverContent></PopoverContent>
+        </Popover>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ type FoodsProps = {
 export const Foods = (props: FoodsProps) => {
   const { categories } = props;
   const [foods, setFoods] = useState<Food>();
-  const orderFoods = [];
+  const orderFoods: Food[] = [];
   const getFoods = async () => {
     const response = await axios.get("http://localhost:4007/food");
     setFoods(response.data.data);

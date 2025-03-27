@@ -20,12 +20,12 @@ type AdderssProps = {
   setLocation: Dispatch<SetStateAction<Location>>;
   address1: string;
   onClick: () => void;
-  location: string;
+  location: Location;
 };
 export const AddressInput = (props: AdderssProps) => {
   const { address1, setLocation, onClick, location } = props;
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setLocation({ ...location, address: event.target.value });
   };
   return (
@@ -42,7 +42,7 @@ export const AddressInput = (props: AdderssProps) => {
           <DialogDescription>
             <Textarea
               className="flex p-3 flex-col items-start self-stretch w-full h-full mt-5"
-              onChange={onChange}
+              onChange={(event) => onChange(event)}
               placeholder="Please provide specific address details such as building number,
               entrance, and apartment number"
             ></Textarea>
