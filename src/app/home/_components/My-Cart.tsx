@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 
 export const MyCart = () => {
   const [foods, setFoods] = useState([]);
+  const [OrderFoods, setOrderFoods] = useState();
 
   useEffect(() => {
     const storedFoods = JSON.parse(localStorage.getItem("OrderFood")) || [];
@@ -15,6 +16,9 @@ export const MyCart = () => {
     setFoods(updatedFoods);
     localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
   };
+
+  const DecreaseFood = () => {};
+  const IncreaseFood = () => {};
 
   return (
     <div className="flex flex-col gap-3">
@@ -50,11 +54,21 @@ export const MyCart = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="flex gap-3 items-center">
-                    <button className="border px-2" onClick={() => {}}>
+                    <button
+                      className="border px-2"
+                      onClick={() => {
+                        DecreaseFood();
+                      }}
+                    >
                       −
                     </button>
                     <div>{element.quantity || 1}</div>
-                    <button className="border px-2" onClick={() => {}}>
+                    <button
+                      className="border px-2"
+                      onClick={() => {
+                        IncreaseFood();
+                      }}
+                    >
                       +
                     </button>
                   </div>
