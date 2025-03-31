@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 export const MyCart = () => {
   const [foods, setFoods] = useState([]);
-  const [OrderFoods, setOrderFoods] = useState();
 
   useEffect(() => {
     const storedFoods = JSON.parse(localStorage.getItem("OrderFood")) || [];
@@ -17,14 +15,34 @@ export const MyCart = () => {
     localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
   };
 
-  const DecreaseFood = () => {};
-  const IncreaseFood = () => {};
+  const DecreaseFood = (index) => {
+    const updatedFoods = foods.map((item, i) =>
+      i === index ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
+    );
+    setFoods(updatedFoods);
+    localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
+  };
+
+  const IncreaseFood = (index) => {
+    const updatedFoods = foods.map((item, i) =>
+      i === index ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setFoods(updatedFoods);
+    localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
+  };
 
   return (
     <div className="flex flex-col gap-3">
       <div>My Cart</div>
       {foods.length === 0 ? (
-        <div>Карт хоосон байна.</div>
+        <div className="p-8 flex flex-col justify-center items-center">
+          <img src="Logo2.png" />
+          <div className="text-xl text-extrabold">Your cart is empthy</div>
+          <div className="text-xs text-gray-400 text-center">
+            Hungry? 🍔 Add some delicious dishes to your cart and satisfy your
+            cravings!
+          </div>
+        </div>
       ) : (
         <div className="flex flex-col gap-5">
           {foods.map((element, index) => (
@@ -32,7 +50,7 @@ export const MyCart = () => {
               key={index}
               className="h-[90%] w-full flex p-3 border-b-2 border-dashed gap-3"
             >
-              <div className="w-[30%] h-20 rounded-2xl overflow-hidden object-cover">
+              <div className="w-[30%] h-20 rounded-2xl overflow-hidden">
                 <img
                   src={element.image}
                   alt={element.foodName}
@@ -56,18 +74,14 @@ export const MyCart = () => {
                   <div className="flex gap-3 items-center">
                     <button
                       className="border px-2"
-                      onClick={() => {
-                        DecreaseFood();
-                      }}
+                      onClick={() => DecreaseFood(index)}
                     >
                       −
                     </button>
                     <div>{element.quantity || 1}</div>
                     <button
                       className="border px-2"
-                      onClick={() => {
-                        IncreaseFood();
-                      }}
+                      onClick={() => IncreaseFood(index)}
                     >
                       +
                     </button>
