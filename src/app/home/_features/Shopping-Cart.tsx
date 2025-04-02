@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -37,9 +38,11 @@ export const ShoppingCarts = () => {
           <TabsContent value="cart" className=" flex flex-col gap-5 ">
             <div className="bg-white h-[680px] rounded-2xl p-5 overflow-scroll">
               <MyCart />
-              <Button className="text-red-500 bg-white border border-red-500 w-full mt-3 rounded-2xl">
-                Add Food
-              </Button>
+              <SheetClose className="w-full">
+                <Button className="text-red-500 bg-white border border-red-500 w-full mt-3 rounded-2xl">
+                  Add Food
+                </Button>
+              </SheetClose>
             </div>
             <div className="bg-white h-[220px] rounded-2xl p-3">
               <PaymentInfo />

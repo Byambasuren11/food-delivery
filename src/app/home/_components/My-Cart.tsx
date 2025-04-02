@@ -1,34 +1,51 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { Food } from "../_features/Foods";
 
 export const MyCart = () => {
   const [foods, setFoods] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const storedFoods = JSON.parse(localStorage.getItem("OrderFood")) || [];
-    setFoods(storedFoods);
+    const storedFoods = localStorage.getItem("OrderFood");
+    if (storedFoods) {
+      const storedfoods = JSON.parse(storedFoods);
+      setFoods(storedfoods);
+      updateTotalPrice(storedfoods);
+    }
   }, []);
 
-  const deleteFood = (index) => {
+  const updateTotalPrice = (foodsList: Food[]) => {
+    const total = foodsList.reduce(
+      (acc: number, food: Food) => acc + (food.price || 0),
+      0
+    );
+    setTotalPrice(total);
+    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+  };
+
+  const deleteFood = (index: number) => {
     const updatedFoods = foods.filter((_, i) => i !== index);
     setFoods(updatedFoods);
     localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
+    updateTotalPrice(updatedFoods);
   };
+  const handleChangeQuantity = (index: number, id: string) => {
+    setFoods((prevFoods) => {
+       const updatedFoods:Food[] = prevFoods.map((food: Food) =>
+        food._id === id
+          ? {
+              ...food,
+              quantity: Math.max(1, (food.quantity || 1) + index),
+              price: food.price * ((food.quantity || 1) + index),
+            }
+          : food
+      );
 
-  const DecreaseFood = (index) => {
-    const updatedFoods = foods.map((item, i) =>
-      i === index ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
-    );
-    setFoods(updatedFoods);
-    localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
-  };
-
-  const IncreaseFood = (index) => {
-    const updatedFoods = foods.map((item, i) =>
-      i === index ? { ...item, quantity: item.quantity + 1 } : item
-    );
-    setFoods(updatedFoods);
-    localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
+      localStorage.setItem("OrderFood", JSON.stringify(updatedFoods));
+      updateTotalPrice(updatedFoods);
+      return updatedFoods;
+    });
   };
 
   return (
@@ -37,7 +54,7 @@ export const MyCart = () => {
       {foods.length === 0 ? (
         <div className="p-8 flex flex-col justify-center items-center">
           <img src="Logo2.png" />
-          <div className="text-xl text-extrabold">Your cart is empthy</div>
+          <div className="text-xl font-extrabold">Your cart is empty</div>
           <div className="text-xs text-gray-400 text-center">
             Hungry? 🍔 Add some delicious dishes to your cart and satisfy your
             cravings!
@@ -45,9 +62,9 @@ export const MyCart = () => {
         </div>
       ) : (
         <div className="flex flex-col gap-5">
-          {foods.map((element, index) => (
+          {foods.map((element: Food, index) => (
             <div
-              key={index}
+              key={element._id}
               className="h-[90%] w-full flex p-3 border-b-2 border-dashed gap-3"
             >
               <div className="w-[30%] h-20 rounded-2xl overflow-hidden">
@@ -74,14 +91,15 @@ export const MyCart = () => {
                   <div className="flex gap-3 items-center">
                     <button
                       className="border px-2"
-                      onClick={() => DecreaseFood(index)}
+                      onClick={() => handleChangeQuantity(-1, element._id)}
+                      disabled={element.quantity === 1}
                     >
                       −
                     </button>
                     <div>{element.quantity || 1}</div>
                     <button
                       className="border px-2"
-                      onClick={() => IncreaseFood(index)}
+                      onClick={() => handleChangeQuantity(1, element._id)}
                     >
                       +
                     </button>
@@ -93,6 +111,9 @@ export const MyCart = () => {
               </div>
             </div>
           ))}
+          <div className="text-xl font-bold text-right">
+            Total Price: {totalPrice}$
+          </div>
         </div>
       )}
     </div>

@@ -10,6 +10,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type Location = {
   address: string;
@@ -18,6 +20,7 @@ type Location = {
 export const Header = () => {
   const address1 = localStorage.getItem("address");
   const [location, setLoction] = useState({});
+  const router = useRouter();
 
   const updateAddress = async () => {
     setLoction({ ...location, _id: localStorage.getItem("_id") });
@@ -27,6 +30,10 @@ export const Header = () => {
   };
   const onClick = () => {
     updateAddress();
+  };
+  const onClick1 = () => {
+    localStorage.clear();
+    router.push("/Login");
   };
   useEffect(() => {}, []);
   return (
@@ -49,7 +56,15 @@ export const Header = () => {
           <PopoverTrigger>
             <User className="p-3 bg-white rounded-full text-red-500 w-9 h-9" />
           </PopoverTrigger>
-          <PopoverContent></PopoverContent>
+          <PopoverContent>
+            {" "}
+            <Button
+              className="bg-gray-200 text-black rounded-2xl"
+              onClick={onClick1}
+            >
+              Sign Out
+            </Button>
+          </PopoverContent>
         </Popover>
       </div>
     </div>

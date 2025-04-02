@@ -20,7 +20,7 @@ const ThirdStep = () => {
     const response = await axios.post("http://localhost:4007/user", values);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("address", response.data.data);
-    localStorage.setItem("_id", response.data._id);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
     router.push("/home");
   };
 

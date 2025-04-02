@@ -4,17 +4,20 @@ import { useEffect, useState } from "react";
 import { PlusIcon } from "lucide-react";
 import { log } from "console";
 
-type Category = {
+export type Category = {
   categoryName: string;
   _id: string;
   foodCount: number;
 };
-type Food = {
+export type Food = {
   category: string;
   image: string;
   foodName: string;
   price: number;
   ingredients: string;
+  _id: string;
+  quantity: number;
+  basePrice: number;
 };
 
 type FoodsProps = {
@@ -23,7 +26,7 @@ type FoodsProps = {
 
 export const Foods = (props: FoodsProps) => {
   const { categories } = props;
-  const [foods, setFoods] = useState<Food>();
+  const [foods, setFoods] = useState<Food[]>([]);
   const orderFoods: Food[] = [];
   const getFoods = async () => {
     const response = await axios.get("http://localhost:4007/food");
@@ -32,8 +35,8 @@ export const Foods = (props: FoodsProps) => {
   useEffect(() => {
     getFoods();
   }, []);
-  const onClick = (id) => {
-    const Id = foods?.map((element, index) => {
+  const onClick = (id: string) => {
+    const Id = foods?.map((element: Food, index) => {
       if (element._id === id) {
         orderFoods.push(element);
         localStorage.setItem("OrderFood", JSON.stringify(orderFoods));
