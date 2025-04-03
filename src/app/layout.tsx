@@ -4,6 +4,8 @@ import "./globals.css";
 import AuthProvider from "./provider/AuthProvider";
 import { UserProvider } from "./provider/user-Porvider";
 
+import { ToastContainer } from "react-toastify";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,7 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            {children}
+            <ToastContainer />
+          </UserProvider>
         </AuthProvider>
       </body>
     </html>

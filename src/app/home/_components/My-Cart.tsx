@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Food } from "../_features/Foods";
+import axios from "axios";
 
 export const MyCart = () => {
   const [foods, setFoods] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [foodOrderItems,setFoodOrderItems]=useState([])
 
   useEffect(() => {
     const storedFoods = localStorage.getItem("OrderFood");
@@ -12,8 +14,20 @@ export const MyCart = () => {
       const storedfoods = JSON.parse(storedFoods);
       setFoods(storedfoods);
       updateTotalPrice(storedfoods);
+      orderFood();
     }
   }, []);
+  const orderFood = async () => {
+    const storedFoods = localStorage.getItem("OrderFood");
+    if (storedFoods) {
+      const storedfoods = JSON.parse(storedFoods);
+      const foodOrderItems = storedfoods.map((element) => {
+        return element._id
+      });
+      console.log(foodOrderItems);
+    }
+    // const response = await axios.post("http://localhost:4007/food-order");
+  };
 
   const updateTotalPrice = (foodsList: Food[]) => {
     const total = foodsList.reduce(
@@ -32,12 +46,13 @@ export const MyCart = () => {
   };
   const handleChangeQuantity = (index: number, id: string) => {
     setFoods((prevFoods) => {
-       const updatedFoods:Food[] = prevFoods.map((food: Food) =>
+      const updatedFoods: Food[] = prevFoods.map((food: Food) =>
         food._id === id
           ? {
               ...food,
               quantity: Math.max(1, (food.quantity || 1) + index),
-              price: food.price * ((food.quantity || 1) + index),
+              price: food.price,
+              // setFoodPrice(price),
             }
           : food
       );
