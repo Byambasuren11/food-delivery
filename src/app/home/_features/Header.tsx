@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 export type Location = {
   address: string | null;
-  _id: string | null;
+  _id: string;
 };
 export const Header = () => {
   const address1 = localStorage?.getItem("address") || "";
