@@ -54,9 +54,7 @@ export const Foods = ({ categories }: FoodsProps) => {
 
     const updatedOrder = [...orderFoods, selectedFood];
     setOrderFoods(updatedOrder);
-    typeof localStorage !== "undefined"
-      ? localStorage.setItem("OrderFood", JSON.stringify(updatedOrder))
-      : "";
+    localStorage.setItem("OrderFood", JSON.stringify(updatedOrder));
 
     toast.success("🦄 Successfully added to order!", {
       position: "top-right",
