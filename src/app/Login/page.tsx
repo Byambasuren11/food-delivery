@@ -68,10 +68,10 @@ const ThirdStep = () => {
                 ) : null}
               </div>
               <Button className="bg-gray-400" type="submit">
-                Let`&apos;s go
+                Let's go
               </Button>
               <p className="text-center mt-2">
-                I don`&apos;t have a account? <a href="/">SignUp</a>
+                I don't have a account? <a href="/">SignUp</a>
               </p>
             </Form>
           )}

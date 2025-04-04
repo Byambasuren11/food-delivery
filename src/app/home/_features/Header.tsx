@@ -18,7 +18,7 @@ export type Location = {
   _id: string | null;
 };
 export const Header = () => {
-  const address1 = window!.localStorage?.getItem("address") || "";
+  const address1 = localStorage?.getItem("address") || "";
   const [location, setLoction] = useState<Location>({ address: "", _id: "" });
   const router = useRouter();
 
