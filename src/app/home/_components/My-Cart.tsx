@@ -3,10 +3,13 @@ import { X } from "lucide-react";
 import { Food } from "../_features/Foods";
 import axios from "axios";
 
+type s = {
+  _id: string;
+};
 export const MyCart = () => {
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState<Food[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [foodOrderItems,setFoodOrderItems]=useState([])
+  const [foodOrderItems, setFoodOrderItems] = useState([]);
 
   useEffect(() => {
     const storedFoods = localStorage.getItem("OrderFood");
@@ -21,8 +24,8 @@ export const MyCart = () => {
     const storedFoods = localStorage.getItem("OrderFood");
     if (storedFoods) {
       const storedfoods = JSON.parse(storedFoods);
-      const foodOrderItems = storedfoods.map((element) => {
-        return element._id
+      const foodOrderItems = storedfoods.map((element: s) => {
+        return element._id;
       });
       console.log(foodOrderItems);
     }
@@ -52,7 +55,6 @@ export const MyCart = () => {
               ...food,
               quantity: Math.max(1, (food.quantity || 1) + index),
               price: food.price,
-              // setFoodPrice(price),
             }
           : food
       );
@@ -120,7 +122,7 @@ export const MyCart = () => {
                     </button>
                   </div>
                   <div className="flex items-center">
-                    {element.price} <p>$</p>
+                    {element.price * element.quantity} <p>$</p>
                   </div>
                 </div>
               </div>

@@ -11,11 +11,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronRight } from "lucide-react";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Location } from "../_features/Header";
 
-type Location = {
-  address: string;
-  _id: string;
-};
 type AdderssProps = {
   setLocation: Dispatch<SetStateAction<Location>>;
   address1: string;

@@ -13,13 +13,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-type Location = {
+export type Location = {
   address: string;
   _id: string;
 };
 export const Header = () => {
-  const address1 = localStorage.getItem("address");
-  const [location, setLoction] = useState({});
+  const address1 = localStorage.getItem("address") || "";
+  const [location, setLoction] = useState({ address: "", _id: "" });
   const router = useRouter();
 
   const updateAddress = async () => {
