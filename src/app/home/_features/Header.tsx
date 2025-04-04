@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/provider/user-Porvider";
 
 export type Location = {
   address: string | null;
@@ -20,7 +21,7 @@ export type Location = {
 export const Header = () => {
   let addressOne = "";
   const [location, setLoction] = useState<Location>({ address: "", _id: "" });
-  const router = useRouter();
+  const { onClick1 } = useUser();
 
   const updateAddress = async () => {
     const id =
@@ -34,12 +35,6 @@ export const Header = () => {
   };
   const onClick = () => {
     updateAddress();
-  };
-  const onClick1 = () => {
-    if (typeof localStorage !== "undefined") {
-      localStorage.clear();
-    }
-    router.push("/Login");
   };
 
   useEffect(() => {

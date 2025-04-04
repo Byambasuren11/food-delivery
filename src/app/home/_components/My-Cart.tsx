@@ -120,7 +120,7 @@ export const MyCart = () => {
                     </button>
                   </div>
                   <div className="flex items-center">
-                    {element.price * element.quantity} <p>$</p>
+                    {element.price * element.quantity || element.price} <p>$</p>
                   </div>
                 </div>
               </div>
