@@ -15,27 +15,39 @@ import { useRouter } from "next/navigation";
 
 export type Location = {
   address: string | null;
-  _id: string;
+  _id: string | null;
 };
 export const Header = () => {
-  const address1 = localStorage?.getItem("address") || "";
+  let addressOne = "";
   const [location, setLoction] = useState<Location>({ address: "", _id: "" });
   const router = useRouter();
 
   const updateAddress = async () => {
-    setLoction({ ...location, _id: localStorage.getItem("_id") });
+    const id =
+      typeof localStorage !== "undefined" ? localStorage.getItem("_id") : "";
+    setLoction({ ...location, _id: id });
     const response = await axios.put("http://localhost:4007/user", location);
     console.log(response.data);
-    localStorage.setItem("address", response.data.updatedUser.address);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("address", response.data.updatedUser.address);
+    }
   };
   const onClick = () => {
     updateAddress();
   };
   const onClick1 = () => {
-    localStorage.clear();
+    if (typeof localStorage !== "undefined") {
+      localStorage.clear();
+    }
     router.push("/Login");
   };
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      addressOne = window?.localStorage?.getItem("address") || "";
+    }
+  }, []);
+
   return (
     <div className="flex justify-between w-full p-4 ">
       <Logo />
@@ -43,7 +55,7 @@ export const Header = () => {
         <div className="relative">
           <div className="rounded-2xl bg-white pl-9 w-fit h-9 text-red-500 p-1">
             <AddressInput
-              address1={address1}
+              address1={addressOne}
               setLocation={setLoction}
               onClick={onClick}
               location={location}

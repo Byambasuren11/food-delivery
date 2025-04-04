@@ -43,7 +43,11 @@ const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             <p>Create a strong password with letters, numbers</p>
           </div>
           <div>
-            <Field placeholder="Password" name="password" className="border rounded-xl p-2 w-full"/>
+            <Field
+              placeholder="Password"
+              name="password"
+              className="border rounded-xl p-2 w-full"
+            />
             {errors.password ? (
               <div className="text-red-500">{errors.password}</div>
             ) : (
@@ -51,7 +55,11 @@ const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             )}
           </div>
           <div>
-            <Field placeholder="Confirm" name="confirmPassword" className="border rounded-xl p-2 w-full"/>
+            <Field
+              placeholder="Confirm"
+              name="confirmPassword"
+              className="border rounded-xl p-2 w-full"
+            />
             {errors.confirmPassword ? (
               <div className="text-red-500">{errors.confirmPassword}</div>
             ) : (
@@ -63,7 +71,7 @@ const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             <p>Show password</p>
           </div>
           <Button className="bg-gray-400" type="submit">
-            Let`&apos;`s go
+            Lets go
           </Button>
           <p className="text-center mt-2">
             Already have an account? <a href="Login">Log in</a>

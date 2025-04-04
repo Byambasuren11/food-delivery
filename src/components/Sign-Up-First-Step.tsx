@@ -41,7 +41,7 @@ const FirstStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             )}
           </div>
           <Button className="bg-gray-400" type="submit">
-            Let`&apos;`s go
+            Lets go
           </Button>
           <p className="text-center mt-2">
             Already have an account? <a href="Login">Log in</a>

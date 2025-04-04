@@ -2,8 +2,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { PlusIcon } from "lucide-react";
-import { toast } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export type Category = {
   categoryName: string;
@@ -29,7 +29,10 @@ type FoodsProps = {
 export const Foods = ({ categories }: FoodsProps) => {
   const [foods, setFoods] = useState<Food[]>([]);
   const [orderFoods, setOrderFoods] = useState<Food[]>(() => {
-    const storedOrder = localStorage.getItem("OrderFood");
+    const storedOrder =
+      typeof localStorage !== "undefined"
+        ? localStorage.getItem("OrderFood")
+        : "";
     return storedOrder ? JSON.parse(storedOrder) : [];
   });
 
@@ -51,7 +54,9 @@ export const Foods = ({ categories }: FoodsProps) => {
 
     const updatedOrder = [...orderFoods, selectedFood];
     setOrderFoods(updatedOrder);
-    localStorage.setItem("OrderFood", JSON.stringify(updatedOrder));
+    typeof localStorage !== "undefined"
+      ? localStorage.setItem("OrderFood", JSON.stringify(updatedOrder))
+      : "";
 
     toast.success("🦄 Successfully added to order!", {
       position: "top-right",
@@ -69,7 +74,10 @@ export const Foods = ({ categories }: FoodsProps) => {
       {categories?.map((category, index) => {
         if (category.foodCount > 0) {
           return (
-            <div key={index} className="h-fit p-5 rounded-xl w-full flex flex-col gap-2 text-2xl text-white">
+            <div
+              key={index}
+              className="h-fit p-5 rounded-xl w-full flex flex-col gap-2 text-2xl text-white"
+            >
               <div>{category.categoryName}</div>
               <div className="flex gap-5">
                 {foods
@@ -90,7 +98,9 @@ export const Foods = ({ categories }: FoodsProps) => {
                         <p className="text-red-600">{food.foodName}</p>
                         <p>${food.price}</p>
                       </div>
-                      <div className="text-xs text-black">{food.ingredients}</div>
+                      <div className="text-xs text-black">
+                        {food.ingredients}
+                      </div>
                     </div>
                   ))}
               </div>

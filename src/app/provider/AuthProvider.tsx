@@ -8,7 +8,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token =
     (typeof window != "undefined" && localStorage.getItem("token")) || "";
   const { isExpired } = useJwt(token!);
-  const router = useRouter(); 
+  const router = useRouter();
   useEffect(() => {
     if (!token || isExpired) {
       router.push("/Login");
