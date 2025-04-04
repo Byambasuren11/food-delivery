@@ -17,9 +17,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const user1 = localStorage.getItem("user");
     if (user1) {
       const user = JSON.parse(user1);
+      setLoading(false);
+      setUser(user!);
     }
-    setLoading(false);
-    setUser(user!);
   }, []);
 
   return (

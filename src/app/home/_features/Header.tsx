@@ -14,11 +14,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export type Location = {
-  address: string;
-  _id: string |null ;
+  address: string | null;
+  _id: string | null;
 };
 export const Header = () => {
-  const address1 = localStorage.getItem("address") || "";
+  const address1 = window!.localStorage?.getItem("address") || "";
   const [location, setLoction] = useState<Location>({ address: "", _id: "" });
   const router = useRouter();
 

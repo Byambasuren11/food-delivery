@@ -1,7 +1,6 @@
 "use client";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction, useReducer, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { useRouter } from "next/navigation";
@@ -34,7 +33,7 @@ const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
         router.push("/Login");
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors }) => (
         <Form className="w-2/5 h-1/3 flex flex-col gap-6">
           <div className="border w-fit rounded-8" onClick={previousPage}>
             <ChevronLeft />
@@ -64,7 +63,7 @@ const SecondStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             <p>Show password</p>
           </div>
           <Button className="bg-gray-400" type="submit">
-            Let's go
+            Let`&apos;`s go
           </Button>
           <p className="text-center mt-2">
             Already have an account? <a href="Login">Log in</a>

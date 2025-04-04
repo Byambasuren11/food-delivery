@@ -1,7 +1,6 @@
 "use client";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
 
@@ -42,7 +41,7 @@ const FirstStep = (props: { setStep: Dispatch<SetStateAction<number>> }) => {
             )}
           </div>
           <Button className="bg-gray-400" type="submit">
-            Let's go
+            Let`&apos;`s go
           </Button>
           <p className="text-center mt-2">
             Already have an account? <a href="Login">Log in</a>

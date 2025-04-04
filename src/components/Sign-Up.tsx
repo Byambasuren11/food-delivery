@@ -2,7 +2,6 @@
 import { useState } from "react";
 import FirstStep from "./Sign-Up-First-Step";
 import SecondStep from "./Sign-Up-Second-Step";
-import ThirdStep from "../app/Login/page";
 
 const CreateAccount = () => {
   const [step, setStep] = useState(1);

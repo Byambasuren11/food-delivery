@@ -68,11 +68,11 @@ const ThirdStep = () => {
                 ) : null}
               </div>
               <Button className="bg-gray-400" type="submit">
-                Let's go
+                Let`&apos;s go
               </Button>
-              {/* <p className="text-center mt-2">
-                Already have an account? <a href="#">Log in</a>
-              </p> */}
+              <p className="text-center mt-2">
+                I don`&apos;t have a account? <a href="/">SignUp</a>
+              </p>
             </Form>
           )}
         </Formik>

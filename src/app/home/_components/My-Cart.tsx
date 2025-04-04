@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Food } from "../_features/Foods";
-import axios from "axios";
 
 type s = {
   _id: string;
@@ -9,7 +8,6 @@ type s = {
 export const MyCart = () => {
   const [foods, setFoods] = useState<Food[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [foodOrderItems, setFoodOrderItems] = useState([]);
 
   useEffect(() => {
     const storedFoods = localStorage.getItem("OrderFood");
