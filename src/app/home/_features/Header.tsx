@@ -15,11 +15,11 @@ import { useRouter } from "next/navigation";
 
 export type Location = {
   address: string;
-  _id: string;
+  _id: string |null ;
 };
 export const Header = () => {
   const address1 = localStorage.getItem("address") || "";
-  const [location, setLoction] = useState({ address: "", _id: "" });
+  const [location, setLoction] = useState<Location>({ address: "", _id: "" });
   const router = useRouter();
 
   const updateAddress = async () => {
