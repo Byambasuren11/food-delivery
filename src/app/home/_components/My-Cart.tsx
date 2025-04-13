@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Food } from "../_features/Foods";
+import axios from "axios";
 
 type s = {
   _id: string;
@@ -27,17 +28,30 @@ export const MyCart = () => {
       });
       console.log(foodOrderItems);
     }
-    // const response = await axios.post("http://localhost:4007/food-order");
   };
 
+  const postOrder=async()=>{
+    const getTotalPrice=localStorage.getItem("totalPrice");
+    if(getTotalPrice){
+      const response = await axios.post("http://localhost:4007/food-order",{
+        totalPrice:getTotalPrice,
+        foodItems: foods.map((food: Food) => ({
+          foodId: food._id,
+          quantity: food.quantity,
+        })),
+      });
+      console.log(response.data);
+    }
+  }
   const updateTotalPrice = (foodsList: Food[]) => {
     const total = foodsList.reduce(
-      (acc: number, food: Food) => acc + (food.price || 0),
+      (acc: number, food: Food) => acc + ((food.price || 0) * (food.quantity || 1)),
       0
     );
     setTotalPrice(total);
-    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+    localStorage.setItem("totalPrice", JSON.stringify(total));
   };
+  
 
   const deleteFood = (index: number) => {
     const updatedFoods = foods.filter((_, i) => i !== index);
